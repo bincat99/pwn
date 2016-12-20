@@ -1,6 +1,6 @@
 #lokihardt
 
-From [pwnable.kr][http://pwnable.kr] :)
+From [pwnable.kr](http://pwnable.kr) :)
 
 First, this solver is quite different from the intended solution. (you can read the intended_sol.py after getting shell)
 
