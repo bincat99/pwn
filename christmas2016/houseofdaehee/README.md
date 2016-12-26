@@ -4,9 +4,9 @@
 from Christmas CTF 2016
 pwn 100
 
-code seems like unlink problem of [pwnable.kr](http://pwnable.kr) 
-There are two differences.
-1. given libc leak instead of stack address leak
+code seems like unlink problem of [pwnable.kr](http://pwnable.kr)   
+There are two differences.  
+1. given libc leak instead of stack address leak   
 2. nullified argv and envp
 
 To solve this, I followed  [House of Orange](http://4ngelboy.blogspot.kr/2016/10/hitcon-ctf-qual-2016-house-of-orange.html)
