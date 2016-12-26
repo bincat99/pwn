@@ -12,8 +12,6 @@ There are two differences.
 To solve this, I followed  [House of Orange](http://4ngelboy.blogspot.kr/2016/10/hitcon-ctf-qual-2016-house-of-orange.html)
 
 
-_IO_list_all pointer를 잘 덮고 abort 루트안에서 
-조건을 적당히 통과해서 _IO_OVERFLOW 로 뛰게될 때 내가 덮은 function pointer로 뛰게 할 수 있다. 
 
 After overwrite _IO_list_all pointer, in abort routine, I got the rip control by overwritten function pointer (_IO_OVERFLOW)
 
