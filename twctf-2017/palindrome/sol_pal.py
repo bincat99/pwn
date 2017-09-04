@@ -37,7 +37,7 @@ for _ in xrange (50):
   assert (n == len (data))
   ans = (str (count_pal (data)))
   r.sendline (ans)
-  r.recv ()
+  print r.recv ()
 
 
 print r.recv ()
