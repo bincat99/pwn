@@ -3,6 +3,9 @@ from time import sleep
 
 context.terminal = ["tmux", "splitw", "-h"]
 
+# even if you change control flow and jump to system ("/bin/sh"), it might fail because of overwriting environ vars 
+# so make payload carefully 
+
 
 p = process ("./ascii_art_maker")
 #p = remote ("pwn2.chal.ctf.westerns.tokyo", 9480)
