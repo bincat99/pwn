@@ -248,7 +248,7 @@ Also upload_server.py tell us 'p' is the first byte of flag. (you need `hash` fi
 
 * Blind environment?
 
-  The challenge was a simple(after solved), but such a blind environment makes harder the challenge. When our exploit is not working, we only could guess the cause. It is kind a blind puzzle. We cannot know how D-cache is filled. 
+  The challenge was a simple(after solved), but such a blind environment makes the challenge harder. When our exploit is not working, we only could guess the cause. It is kind a blind puzzle. We cannot know how D-cache is filled. 
 
 * Awesome quality
 
