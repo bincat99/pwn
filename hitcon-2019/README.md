@@ -14,7 +14,7 @@ I half-solved:
 * PoE I - Luna (@lemonwater)
 * One Punch Man (@mathboy7)
 
-half-things like that: they found main vulnerabilities and get pc control, but had been suffred from getting flag.
+half-things like that: they found main vulnerabilities and get pc control, but had been suffered from getting flag.
 
 So I just did late part of exploit :/
 
