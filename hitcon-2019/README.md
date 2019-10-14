@@ -16,7 +16,7 @@ I half-solved:
 
 half-things like that: they found main vulnerabilities and get pc control, but are suffred from getting flag.
 
-So I just did back part of exploit :/
+So I just did late part of exploit :/
 
 
 
