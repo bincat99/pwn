@@ -79,5 +79,3 @@ print len(payload.encode('utf-8'))
 
 with open('payload.evm', 'wb') as f:
     f.write(payload.encode('utf-8'))
-
-
