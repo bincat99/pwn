@@ -28,7 +28,7 @@ The vm gets input via emojis
 and the input file looks like: 
 
 ```
-í ¼í¸³í ¼í¸³í ¼í¸³â¬í ½í¸…â¬í ½í¸âŒâ¬í ½í¸€âž•í ¼í¶•â¬í ½í¸€â¬í ½í¸â¬í ½í¸œâ¬í ½í¸âŒâ¬í ½í¸‚âž•â¬í ½í¸œâ¬í ½í¸âŒâ¬í ½í¸‚âž•â¬í ½í¸œâ¬í ½í¸âŒâ¬í ½í¸‚âž•â¬í ½í¸œâ¬í ½í¸âŒâ¬í ½í¸‚âž•â¬í ½í¸œâ¬í ½í¸âŒâ¬í ½í¸‚âž•â¬í ½í¸œâ¬í ½í¸âŒâ¬í ½í¸‚âž•â¬í ½í¸œâ¬í ½í¸âŒâ¬í ½í¸‚âž•â¬í ½í¸œ
+ðŸˆ³ðŸˆ³ðŸˆ³â¬ðŸ˜…â¬ðŸ˜âŒâ¬ðŸ˜€âž•ðŸ†•â¬ðŸ˜€â¬ðŸ˜â¬ðŸ˜œâ¬ðŸ˜âŒâ¬ðŸ˜‚âž•â¬ðŸ˜œâ¬ðŸ˜âŒâ¬ðŸ˜‚âž•â¬ðŸ˜œâ¬ðŸ˜âŒâ¬ðŸ˜‚âž•â¬ðŸ˜œâ¬ðŸ˜âŒâ¬ðŸ˜‚âž•â¬ðŸ˜œâ¬ðŸ˜âŒâ¬ðŸ˜‚âž•â¬ðŸ˜œâ¬ðŸ˜âŒâ¬ðŸ˜‚âž•â¬ðŸ˜œâ¬ðŸ˜âŒâ¬ðŸ˜‚âž•â¬ðŸ˜œâ¬ðŸ˜âŒâ¬ðŸ˜‚âž•â¬ðŸ˜œâ¬ðŸ˜âŒâ¬ðŸ˜‚âž•â¬ðŸ˜œâ¬ðŸ˜âŒâ¬ðŸ˜‚âž•â¬ðŸ˜œâ¬ðŸ˜
 ```
 
 init_prob() function is at 0x4221 (sub_4221).
@@ -160,7 +160,7 @@ With overwriting string_ptr, we can easily make arbitrary read and write.
 This is our exploit.evm
 
 ```
-â¬í ½í¸â¬í ½í¸âŒâ¬í ½í¸âŒâ¬í ½í¸â¬í ½í¸âŒâž•í ¼í¶•â¬í ½í¸í ¼í¶•â¬í ½í¸í ¼í¶•â¬í ½í¸í ¼í¶•â¬í ½í¸í ¼í¶•â¬í ½í¸í ¼í¶•âž•í ½í´í ½í´í ½í´í ½í´í ½í´í ½í´¢â¬í ½í¸€í ½í³„â¬í ½í¸â¬í ½í¸âŒâ¬í ½í¸…âŒâ¬í ½í¸â¬í ½í¸‰âŒâ¬í ½í¸‰âž•âž•âž•â¬í ½í¸í ¼í¶•â¬í ¾í´£í ¼í¶“â¬í ½í¸â¬í ½í¸âŒâ¬í ½í¸âŒí ¼í¶•â¬í ¾í´£í ½í³„â¬í ½í¸œí ½í³â¬í ¾í´£í ½í³„â¬í ½í¸œí ½í³„â¬í ½í¸€í ¼í¶“í ½í»‘
+â¬ðŸ˜â¬ðŸ˜âŒâ¬ðŸ˜âŒâ¬ðŸ˜â¬ðŸ˜âŒâž•ðŸ†•â¬ðŸ˜ðŸ†•â¬ðŸ˜ðŸ†•â¬ðŸ˜ðŸ†•â¬ðŸ˜ðŸ†•â¬ðŸ˜ðŸ†•âž•ðŸ”ðŸ”ðŸ”ðŸ”ðŸ”ðŸ”¢â¬ðŸ˜€ðŸ“„â¬ðŸ˜â¬ðŸ˜âŒâ¬ðŸ˜…âŒâ¬ðŸ˜â¬ðŸ˜‰âŒâ¬ðŸ˜‰âž•âž•âž•â¬ðŸ˜ðŸ†•â¬ðŸ¤£ðŸ†“â¬ðŸ˜â¬ðŸ˜âŒâ¬ðŸ˜âŒðŸ†•â¬ðŸ¤£ðŸ“„â¬ðŸ˜œðŸ“â¬ðŸ¤£ðŸ“„â¬ðŸ˜œðŸ“„â¬ðŸ˜€ðŸ†“ðŸ›‘
 ```
 
 with some interaction, we can overwrite `__free_hook` to `system`
