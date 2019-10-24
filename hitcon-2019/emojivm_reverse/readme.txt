@@ -1,1 +1,0 @@
-./emojivm ./chal.evm
